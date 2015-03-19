@@ -5,8 +5,6 @@ ENV HOME /tmp
 
 ADD build-melted.conf /tmp/build-melted.conf
 
-RUN sed -i 's/archive.ubuntu.com/de.archive.ubuntu.com/' /etc/apt/sources.list
-
 # Installing all build tools, download and build melted and webvfx
 RUN apt-get update && apt-get install -y git automake autoconf libtool intltool g++ yasm swig libmp3lame-dev libgavl-dev libsamplerate-dev libxml2-dev ladspa-sdk libjack-dev libsox-dev libsdl-dev libgtk2.0-dev liboil-dev libsoup2.4-dev libqt4-dev libexif-dev libtheora-dev libvdpau-dev libvorbis-dev python-dev && cd /tmp/ && git clone https://github.com/mltframework/mlt-scripts.git && /tmp/mlt-scripts/build/build-melted.sh -c /tmp/build-melted.conf && cd /tmp/melted && git clone https://github.com/mltframework/webvfx.git && cd /tmp/melted/webvfx && qmake -r PREFIX=/usr && make install && rm -r /tmp/melted && rm /tmp/build-melted.conf && rm -r /tmp/mlt-scripts && apt-get remove -y automake autoconf libtool intltool g++ libmp3lame-dev libgavl-dev libsamplerate-dev libxml2-dev libjack-dev libsox-dev libsdl-dev libgtk2.0-dev liboil-dev libsoup2.4-dev libqt4-dev libexif-dev libtheora-dev libvdpau-dev libvorbis-dev python-dev manpages manpages-dev g++ g++-4.6 git && rm -rf /var/lib/apt/lists/* && apt-get -y autoclean && apt-get -y clean && apt-get -y autoremove
 
