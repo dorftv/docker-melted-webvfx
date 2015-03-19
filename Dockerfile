@@ -15,12 +15,12 @@ RUN apt-get update && apt-get install -y xvfb libmp3lame0 libgavl1 libsamplerate
 
 
 # Melted will be run as user default in userspace
-#RUN     useradd -m default
-#USER    default
-#WORKDIR /home/default
-#ENV     HOME /home/default
+RUN     useradd -m default
+USER    default
+WORKDIR /home/default
+ENV     HOME /home/default
 
-ADD melted.sh /tmp/melted.sh
+ADD melted.sh /home/default/melted.sh
 COPY melted.conf /etc/melted/melted.conf
 
 # This is only mentioned here for documentation. 
@@ -29,4 +29,4 @@ COPY melted.conf /etc/melted/melted.conf
 
 # We start with a wrapper script so we can use xvfb-run
 EXPOSE 5250
-ENTRYPOINT ["/tmp/melted.sh"]
+ENTRYPOINT ["/home/default/melted.sh"]
